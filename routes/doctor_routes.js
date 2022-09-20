@@ -1,5 +1,6 @@
 const express = require("express");
 const pool = require("../db_config");
+const bcrypt = require("bcryptjs");
 
 
 let router = express.Router();
@@ -11,20 +12,48 @@ router.post("/signup", async (req, res) => {
     console.log("signing up new doctor...");
 
     try {
-
         const existingDoctor = await pool.query(
             "SELECT * FROM doctors WHERE email = $1", [email]);
 
-        if (existingDoctor.rows.length === 0) {
+        if (existingDoctor.rows.length <= 0) {
             //doctor does not exist
 
+            //generate hashed password
+            let salt = await bcrypt.genSalt(10);
+            let hash = await bcrypt.hash(password, salt)
             const newDoctor = await pool.query(
-                `INSERT INTO "doctors" ("username", "email", "password", "onboarded") VALUES ($1, $2, $3, $4)`, [username, email, password, false]
+                `INSERT INTO "doctors" ("username", "email", "password", "onboarded") VALUES ($1, $2, $3, $4)`, [username, email, hash, false]
             );
             return res.status(200).json({ message: "Doctor signed up!" });
         }
         else {
             return res.status(400).json({ error: "Email already exists" })
+        }
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+})
+
+// login a doctor
+
+router.post("/login", async (req, res) => {
+    let { email, password } = req.body;
+    try {
+        let existingDoctor = await pool.query(`SELECT * FROM doctors WHERE email = $1`, [email]);
+        if (existingDoctor.rows.length <= 0) {
+            //doctor with id does not exist
+            return res.status(400).json({ error: "Email Not Found" })
+        }
+        let doctor = JSON.parse(JSON.stringify(existingDoctor.rows[0]));
+
+        //validate passwords
+        const validPassword = await bcrypt.compare(password, doctor.password);
+        if (validPassword) {
+            doctor.password = null;
+            return res.status(200).json(doctor);
+        } else {
+            return res.status(400).json({ error: "Incorrect password" })
         }
 
     } catch (error) {

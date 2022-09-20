@@ -32,11 +32,31 @@ router.post("/signup", async (req, res) => {
     }
 })
 
+//get doctor by id
+
+router.get("/:id", async (req, res) => {
+    try {
+        const doctor = await pool.query("SELECT * FROM doctors WHERE _id = $1", [req.params.id]);
+        if (doctor.rows.length <= 0) {
+            //doctor with id does not exist
+            return res.status(400).json({ error: "Doctor Not Found" })
+        }
+        doctor.rows[0].password = null;
+        return res.status(200).json(doctor.rows[0])
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+})
+
 //get all doctors
 
 router.get("/", async (req, res) => {
     try {
         const allDoctors = await pool.query(`SELECT * FROM doctors`);
+        for (let doctor of allDoctors.rows) {
+            doctor.password = null;
+        }
         return res.status(200).json(allDoctors.rows)
 
     } catch (error) {
@@ -45,8 +65,9 @@ router.get("/", async (req, res) => {
 })
 
 
-//onboard a doctor 
-router.post("/onboard/:email", async (req, res) => {
+//onboard a doctor by email
+
+router.post("/onboard/", async (req, res) => {
     let {
         qualification,
         experience,
@@ -55,11 +76,11 @@ router.post("/onboard/:email", async (req, res) => {
         time,
         speciality,
         city,
-        country
+        country,
+        email
     } = req.body;
 
     try {
-
         const updateDoctor = await pool.query(
             `UPDATE doctors SET 
         qualification=$1,
@@ -78,7 +99,7 @@ router.post("/onboard/:email", async (req, res) => {
                 time,
                 speciality,
                 city,
-                country, true, req.params.email]);
+                country, true, email]);
 
         return res.status(200).json({ message: "Doctor onboarded" })
 

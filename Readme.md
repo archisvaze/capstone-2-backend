@@ -7,4 +7,6 @@ Estimated Time : 4 hours
 - 2:24pm - started working on setup
 - 3:36pm - confirmed my understanding and setup doctors signup route.
 - 4:33pm - worked on route for doctor onboarding.
+- 4:55pm - worked on route to get all doctors and get one doctor by _id.
+
 

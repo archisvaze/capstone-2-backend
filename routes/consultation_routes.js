@@ -97,7 +97,7 @@ router.post("/doctor/:id", async (req, res) => {
     let { notes } = req.body;
     try {
         let updateConsultation = await pool.query(
-            `UPDATE consultations SET notes = $1 WHERE _id = $2`, [notes, req.params.id]
+            `UPDATE consultations SET notes = $1, status = $3 WHERE _id = $2`, [notes, req.params.id, true]
         )
         return res.status(200).json({ message: "Consultation updated with note" })
 
@@ -120,7 +120,7 @@ router.post("/patient/:id", async (req, res) => {
             console.log("Already rated");
             return res.status(400).json({error: "You have already rated this consultations"})
         }
-        
+
         const updateConsultation = await pool.query(
             `UPDATE consultations SET review = $1, rating = $2 WHERE _id = $3`, [review, rating, req.params.id]
         )

@@ -1,6 +1,7 @@
 require("dotenv").config()
 const express = require("express");
 const cors = require("cors");
+const jwt = require("jsonwebtoken")
 
 const app = express();
 
@@ -17,6 +18,10 @@ const httpServer = app.listen(process.env.PORT || 8000, () => {
 
 
 //routes
+const authRouter = require("./routes/auth_routes");
+app.use("/auth", authRouter);
+
+app.use(authenticateMiddleware);
 
 const consultationRouter = require("./routes/consultation_routes");
 app.use("/consultation", consultationRouter);
@@ -27,5 +32,25 @@ app.use("/doctor", doctorRouter);
 const patientRouter = require("./routes/patient_routes");
 app.use("/patient", patientRouter);
 
-const authRouter = require("./routes/auth_routes");
-app.use("/auth", authRouter);
+
+
+
+
+function authenticateMiddleware(req, res, next) {
+    const authHeader = req.headers["authorization"];
+
+    if (authHeader === undefined) {
+        return res.status(401).json({ error: "No token was provided" })
+    }
+    const token = authHeader.split(" ")[1];
+    if (token === undefined) {
+        return res.status(401).json({ error: "Proper token was not provided" })
+    }
+    try {
+        const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        console.log(payload)
+        next();
+    } catch (error) {
+        return res.status(401).json({ error: error })
+    }
+}

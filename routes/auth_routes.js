@@ -1,6 +1,7 @@
 const express = require("express");
 const pool = require("../db_config");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken")
 
 
 let router = express.Router();
@@ -49,8 +50,13 @@ router.post("/doctor/login", async (req, res) => {
         //validate passwords
         const validPassword = await bcrypt.compare(password, doctor.password);
         if (validPassword) {
+            const payload = {
+                id: doctor.doctor_id,
+                email: doctor.email
+            }
+            const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
             doctor.password = null;
-            return res.status(200).json(doctor);
+            return res.status(200).json({ user: doctor, accessToken });
         } else {
             return res.status(400).json({ error: "Incorrect password" })
         }
@@ -107,8 +113,13 @@ router.post("/patient/login", async (req, res) => {
         //validate passwords
         const validPassword = await bcrypt.compare(password, patient.password);
         if (validPassword) {
+            const payload = {
+                id: patient.patient_id,
+                email: patient.email
+            }
+            const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
             patient.password = null;
-            return res.status(200).json(patient);
+            return res.status(200).json({ user: patient, accessToken });
         } else {
             return res.status(400).json({ error: "Incorrect password" })
         }

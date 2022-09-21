@@ -30,6 +30,13 @@ Estimated Time : 5 hours
 - 1:08pm - working on creating login page for patient
 - 2:27pm - worked on landing page, login page for doctor and home page for doctor
 - 2:28pm - working on patient pages: login and home 
+- 3:01pm - worked on setting up all pages, now creating token auth to save user data in state
+- 3:31pm - worked on displaying doctors on patient homepage
+- 3:55pm - working on onboarding for patients
+- 5:13pm - done with patient onboarding - frontend
+- 5:17pm - done for now. 
+
+
 
 
 

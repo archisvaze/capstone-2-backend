@@ -15,6 +15,9 @@ Next Todos:
 - route to create consultation for patient+doctor by matching time/days in the reqbody and doctor obj
 
 ### Day 2 - Setup routes for login, signup for patient.
+- 8:46am - done with auth routes for doctors and patients
+- 10:09 - worked on routes for creating and displaying consultations for doctors and patients
+
 
 
 

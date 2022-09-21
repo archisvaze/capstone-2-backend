@@ -26,3 +26,6 @@ app.use("/doctor", doctorRouter);
 
 const patientRouter = require("./routes/patient_routes");
 app.use("/patient", patientRouter);
+
+const authRouter = require("./routes/auth_routes");
+app.use("/auth", authRouter);

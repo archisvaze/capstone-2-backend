@@ -6,11 +6,11 @@ let router = express.Router();
 
 //create a new consulation 
 router.post("/", async (req, res) => {
-    let { doctor_id, patient_id, day, time } = req.body;
+    let { doctor_id, patient_id, date, time } = req.body;
     try {
         //check if patient has any other consultations at the same time
         const existingConsultations = await pool.query(
-            `SELECT * FROM consultations WHERE patient_id = $1 AND time = $2 AND day = $3`, [patient_id, time, day]
+            `SELECT * FROM consultations WHERE patient_id = $1 AND time = $2 AND date = $3`, [patient_id, time, date]
         );
 
         //get cost for doctor
@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
             console.log("No concurrent consultations found for patient on the same day/time");
 
             const newConsultation = await pool.query(
-                `INSERT INTO "consultations" ("doctor_id", "patient_id", "day", "time", "status", "cost") VALUES ($1, $2, $3, $4, $5, $6)`, [doctor_id, patient_id, day, time, false, cost]
+                `INSERT INTO "consultations" ("doctor_id", "patient_id", "date", "time", "status", "cost") VALUES ($1, $2, $3, $4, $5, $6)`, [doctor_id, patient_id, date, time, false, cost]
             );
             return res.status(200).json({ message: "Consultation Booked!" })
         } else {
@@ -96,9 +96,16 @@ router.get("/doctor/:id", async (req, res) => {
 router.post("/doctor/:id", async (req, res) => {
     let { notes } = req.body;
     try {
+        const existingConsultations = await pool.query(
+            `SELECT * FROM consultations WHERE _id = $1`, [req.params.id]
+        )
+        if (existingConsultations.rows.length <= 0) {
+            return res.status(400).json({ error: "Incorrect Consultation ID or consultation does not exist" })
+        }
         let updateConsultation = await pool.query(
             `UPDATE consultations SET notes = $1, status = $3 WHERE _id = $2`, [notes, req.params.id, true]
         )
+
         return res.status(200).json({ message: "Consultation updated with note" })
 
     } catch (error) {
@@ -115,10 +122,17 @@ router.post("/patient/:id", async (req, res) => {
         let consultation = await pool.query(
             `SELECT * FROM consultations WHERE _id = $1`, [req.params.id]
         );
+        if (consultation.rows.length <= 0) {
+            return res.status(400).json({ error: "Incorrect Consultation ID or consultation does not exist" })
+        }
+        if (consultation.rows[0].status === false) {
+            console.log("consultation is not marked complete by doctor");
+            return res.status(400).json({ error: "Consultation is not marked DONE by Doctor" })
+        }
 
-        if(consultation.rows[0].rating!==null){
+        if (consultation.rows[0].rating !== null) {
             console.log("Already rated");
-            return res.status(400).json({error: "You have already rated this consultations"})
+            return res.status(400).json({ error: "You have already rated this consultations" })
         }
 
         const updateConsultation = await pool.query(

@@ -53,7 +53,7 @@ CREATE TABLE consultations(
     doctor_id INT,
     patient_id INT,
     status BOOLEAN,
-    day integer,
+    date VARCHAR,
     time integer,
     cost INT,
     review VARCHAR,

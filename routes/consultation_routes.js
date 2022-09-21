@@ -13,11 +13,19 @@ router.post("/", async (req, res) => {
             `SELECT * FROM consultations WHERE patient_id = $1 AND time = $2 AND day = $3`, [patient_id, time, day]
         );
 
+        //get cost for doctor
+        const doctor = await pool.query(
+            `SELECT * FROM doctors WHERE doctor_id = $1`, [doctor_id]
+        );
+
+        let cost = doctor.rows[0].cost;
+
+
         if (existingConsultations.rows.length <= 0) {
             console.log("No concurrent consultations found for patient on the same day/time");
 
             const newConsultation = await pool.query(
-                `INSERT INTO "consultations" ("doctor_id", "patient_id", "day", "time", "status") VALUES ($1, $2, $3, $4, $5)`, [doctor_id, patient_id, day, time, false]
+                `INSERT INTO "consultations" ("doctor_id", "patient_id", "day", "time", "status", "cost") VALUES ($1, $2, $3, $4, $5, $6)`, [doctor_id, patient_id, day, time, false, cost]
             );
             return res.status(200).json({ message: "Consultation Booked!" })
         } else {
@@ -84,7 +92,72 @@ router.get("/doctor/:id", async (req, res) => {
 })
 
 
-//update a consultation 
+//update a consultation from doctors POV by consultation id
+router.post("/doctor/:id", async (req, res) => {
+    let { notes } = req.body;
+    try {
+        let updateConsultation = await pool.query(
+            `UPDATE consultations SET notes = $1 WHERE _id = $2`, [notes, req.params.id]
+        )
+        return res.status(200).json({ message: "Consultation updated with note" })
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+})
+
+
+//update a consultation from patients POV by consultation id
+router.post("/patient/:id", async (req, res) => {
+    let { review, rating } = req.body;
+    try {
+
+        let consultation = await pool.query(
+            `SELECT * FROM consultations WHERE _id = $1`, [req.params.id]
+        );
+
+        if(consultation.rows[0].rating!==null){
+            console.log("Already rated");
+            return res.status(400).json({error: "You have already rated this consultations"})
+        }
+        
+        const updateConsultation = await pool.query(
+            `UPDATE consultations SET review = $1, rating = $2 WHERE _id = $3`, [review, rating, req.params.id]
+        )
+
+        //update doctors rating;
+        let doctorsID = consultation.rows[0].doctor_id;
+
+        let existingDoctor = await pool.query(
+            `SELECT * FROM doctors WHERE doctor_id = $1`, [doctorsID]
+        );
+
+        let currRating = existingDoctor.rows[0].rating;
+        if (currRating === null) {
+            const updatedDoctor = await pool.query(
+                `UPDATE doctors SET rating = $1 WHERE doctor_id = $2`, [rating, doctorsID]
+            )
+        }
+        else {
+            //get total number of consultations by doctor and calculate rating
+
+            const doctorsConsultations = await pool.query(
+                `SELECT * FROM consultations WHERE doctor_id = $1`, [doctorsID]
+            );
+            let totalratings = doctorsConsultations.rows.length;
+            console.log(totalratings)
+            let newRating = currRating + rating / totalratings;
+
+            const updatedDoctor = await pool.query(
+                `UPDATE doctors SET rating = $1 WHERE doctor_id = $2`, [newRating, doctorsID]
+            )
+        }
+        return res.status(200).json({ message: "Consultation updated with review and rating" })
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+})
 
 
 

@@ -2,7 +2,8 @@
 
 ## Time Chart
 
-### Day 1 - Setup Postgres and create routes for login, signup for doctor and patient
+### Day 1 - Setup Postgres and create routes for login, signup for doctor and patient and create consultations
+Milestone 1
 Estimated Time : 4 hours
 - 2:24pm - started working on setup
 - 3:36pm - confirmed my understanding and setup doctors signup route.
@@ -17,8 +18,10 @@ Next Todos:
 ### Day 2 - Setup routes for login, signup for patient.
 - 8:46am - done with auth routes for doctors and patients
 - 10:09 - worked on routes for creating and displaying consultations for doctors and patients
+- 10:54am - working on updating a consultation with doctors POV
+- 11:26am - worked on updating consultation from Patients POV with review and rating
 
-
+Milestone 1 complete in ~ 6 hours
 
 
 

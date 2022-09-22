@@ -50,6 +50,7 @@ Estimated Time : 6 hours
 - 11:51am - patient can now book consultation with available doctor
 - 11:55am - working on doctors page to show new requests
 - 12:25pm - worked on route to get availability timings for a specific day
+- 12:49pm - updated onboarding route to send user data for updating
 
 
 

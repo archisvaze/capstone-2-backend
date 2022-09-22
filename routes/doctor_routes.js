@@ -94,7 +94,10 @@ router.post("/onboard/", async (req, res) => {
                 img
             ]);
 
-        return res.status(200).json({ message: "Doctor onboarded" })
+        let doctor = await pool.query(
+            `SELECT * FROM doctors WHERE email = $1`, [email]
+        )
+        return res.status(200).json(doctor.rows[0])
 
     } catch (error) {
         return res.status(400).json({ error: error.message })

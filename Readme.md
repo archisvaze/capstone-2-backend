@@ -49,6 +49,7 @@ Estimated Time : 6 hours
 - 10:00am - start working on patient homepage - doctor card
 - 11:51am - patient can now book consultation with available doctor
 - 11:55am - working on doctors page to show new requests
+- 12:25pm - worked on route to get availability timings for a specific day
 
 
 

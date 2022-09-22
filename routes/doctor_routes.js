@@ -102,4 +102,50 @@ router.post("/onboard/", async (req, res) => {
 
 })
 
+
+
+//get consultation times
+
+router.get("/timings/:id/:date", async (req, res) => {
+    try {
+        let existingDoctor = await pool.query(
+            `SELECT * FROM doctors WHERE doctor_id = $1`, [req.params.id]
+        )
+        if (existingDoctor.rows.length <= 0) {
+            return res.status(400).json({ error: "Incorrect Doctor id or Doctor does not exist" })
+        }
+
+        let doctor = JSON.parse(JSON.stringify(existingDoctor.rows[0]));
+        let times = doctor.times;
+
+        let existingConsultations = await pool.query(
+            `SELECT * FROM consultations WHERE doctor_id = $1 AND date = $2`, [doctor.doctor_id, req.params.date]
+        )
+
+        if (existingConsultations.rows.length <= 0) {
+            return res.status(200).json({ times: times })
+        }
+
+        let sameDayConsultations = JSON.parse(JSON.stringify(existingConsultations.rows));
+
+
+        for (let consultation of sameDayConsultations) {
+            let consultation_time = consultation.time;
+            if (times.includes(consultation_time)) {
+                for (let i = 0; i < times.length; i++) {
+                    if (times[i] === consultation_time) {
+                        times.splice(i, 1)
+                    }
+                }
+            }
+        }
+        return res.status(200).json({ times: times })
+
+
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+})
+
 module.exports = router;

@@ -16,7 +16,8 @@ Next Todos:
 - Signup, login and onboarding for patient
 - route to create consultation for patient+doctor by matching time/days in the reqbody and doctor obj
 
-## Day 2 - Setup routes for login, signup for patient.
+## Day 2
+
 - 8:46am - done with auth routes for doctors and patients
 - 10:09 - worked on routes for creating and displaying consultations for doctors and patients
 - 10:54am - working on updating a consultation with doctors POV
@@ -36,7 +37,18 @@ Estimated Time : 5 hours
 - 5:13pm - done with patient onboarding - frontend
 - 5:17pm - done for now. 
 
+## Day 3
+- 8:30am - working on onboarding for doctor
+- 9:41am - done with doctor onboarding
 
+- Milestone 2 complete in ~ 5 hours
+
+### Milestone 3 - Create doctor card for patient home page, create consultation route and screen, show doctor info and times on consultation and be able to create a new consultation from frontend
+Estimated Time : 6 hours
+
+- 10:00am - start working on patient homepage - doctor card
+- 11:51am - patient can now book consultation with available doctor
+- 11:55am - working on doctors page to show new requests
 
 
 

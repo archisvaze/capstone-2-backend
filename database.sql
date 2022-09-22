@@ -10,8 +10,8 @@ CREATE TABLE doctors(
     hospital VARCHAR,
     city VARCHAR,
     country VARCHAR,
-    days integer[],
-    time integer[],
+    days VARCHAR[],
+    times VARCHAR[],
     speciality VARCHAR,
     onboarded BOOLEAN,
     rating INT,
@@ -19,10 +19,7 @@ CREATE TABLE doctors(
     img VARCHAR
 );
 
--- ALTER TABLE doctors
--- ADD rating INT,
--- ADD cost INT,
--- ADD img VARCHAR;
+
 
 CREATE TABLE patients(
     patient_id SERIAL PRIMARY KEY,
@@ -41,12 +38,7 @@ CREATE TABLE patients(
     phone INT
 );
 
--- ALTER TABLE patients
--- ADD age INT,
--- ADD bloodgroup VARCHAR,
--- ADD gender VARCHAR,
--- ADD img VARCHAR,
--- ADD phone INT;
+
 
 CREATE TABLE consultations(
     _id SERIAL PRIMARY KEY,
@@ -54,15 +46,10 @@ CREATE TABLE consultations(
     patient_id INT,
     status BOOLEAN,
     date VARCHAR,
-    time integer,
+    time VARCHAR,
     cost INT,
     review VARCHAR,
     rating INT,
     notes VARCHAR
 );
 
--- ALTER TABLE consultations
--- ADD cost INT,
--- ADD review VARCHAR,
--- ADD rating INT,
--- ADD notes VARCHAR;

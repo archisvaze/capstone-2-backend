@@ -53,6 +53,14 @@ Estimated Time : 6 hours
 - 12:49pm - updated onboarding route to send user data for updating
 - 1:08am - worked on onboarding route and fixed login process
 - 1:31pm - working on doctors home page to show new consultation requests
+- 3:58pm - worked on CSS for onboarding page
+
+- Milestone 3 complete in ~ 6 hours
+
+### Milestone 4 - Work on the accept and cancel functionality of consultations. Cancel(notes = "cancelled" ?)
+Estimated Time : 6 hours
+
+- 5:36pm - worked on CSS for doctor home page to display new appointments.
 
 
 

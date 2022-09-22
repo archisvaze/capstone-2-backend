@@ -60,6 +60,7 @@ Estimated Time : 6 hours
 ### Milestone 4 - Work on the accept and cancel functionality of consultations. Cancel(notes = "cancelled" ?)
 Estimated Time : 6 hours
 
+- 4:00pm - started working on CSS for Doctors Home page
 - 5:36pm - worked on CSS for doctor home page to display new appointments.
 
 

@@ -52,6 +52,7 @@ Estimated Time : 6 hours
 - 12:25pm - worked on route to get availability timings for a specific day
 - 12:49pm - updated onboarding route to send user data for updating
 - 1:08am - worked on onboarding route and fixed login process
+- 1:31pm - working on doctors home page to show new consultation requests
 
 
 

@@ -74,6 +74,7 @@ Estimated Time : 6 hours
 - 4:30pm - ENCOUNTERED A MASSIVE BUG when I installed a random 3rd party component called "react-modern-calendar-datepicker" and it comepletely broke my app without actually showing any proper errors. So, I had to spend hours trying to debug. Fortunately I found the culprit and removed the package. Then I had to reimpliment another calendar component called react-calendar. This one is working correctly eventhough I had to rewrite some code.
 
 -4:30pm working on landing page
+-5:30pm worked on lading page looks good
 
 
 

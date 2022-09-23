@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
     try {
         //check if patient has any other consultations at the same time
         const existingConsultations = await pool.query(
-            `SELECT * FROM consultations WHERE patient_id = $1 AND time = $2 AND date = $3`, [patient_id, time, date]
+            `SELECT * FROM consultations WHERE patient_id = $1 AND time = $2 AND date = $3 AND status = $4`, [patient_id, time, date, false]
         );
 
         //get cost for doctor
@@ -28,8 +28,8 @@ router.post("/", async (req, res) => {
         if (existingConsultations.rows.length <= 0) {
             console.log("No concurrent consultations found for patient on the same day/time");
 
-            if(!(doctor.rows[0].days.includes(day))){
-                return res.status(400).json({error: `Doctor does not do consultations on ${day}. Please choose another day.`})
+            if (!(doctor.rows[0].days.includes(day))) {
+                return res.status(400).json({ error: `Doctor does not do consultations on ${day}. Please choose another day.` })
             }
 
             const newConsultation = await pool.query(
@@ -182,6 +182,19 @@ router.post("/patient/:id", async (req, res) => {
 })
 
 
+//delete a consultation
+router.delete("/:id", async (req, res) => {
+    try {
+
+        const existingConsultation = await pool.query(
+            `DELETE FROM consultations WHERE _id = $1`, [req.params.id]
+        )
+        return res.status(200).json({ message: "Consultation was cancelled" })
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+})
 
 
 

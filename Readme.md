@@ -63,6 +63,15 @@ Estimated Time : 6 hours
 - 4:00pm - started working on CSS for Doctors Home page
 - 5:36pm - worked on CSS for doctor home page to display new appointments.
 
+## Day 4
+
+- 8:30am - started working on accept apointment.
+- 10:00am - worked on UI for new consultation popup.
+- 11:00am - working on showing previous consultations.
+- 11:50am - worked on UI for previous consultations, now working on cancelling a consultation
+- 2:13pm - added calendar to doctors page. consultations show when clicked on a date.
+
+
 
 
 

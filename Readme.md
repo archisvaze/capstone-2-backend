@@ -71,6 +71,8 @@ Estimated Time : 6 hours
 - 11:50am - worked on UI for previous consultations, now working on cancelling a consultation
 - 2:13pm - added calendar to doctors page. consultations show when clicked on a date.
 
+- 4:30pm - ENCOUNTERED A MASSIVE BUG when I installed a random 3rd party component called "react-modern-calendar-datepicker" and it comepletely broke my app without actually showing any proper errors. So, I had to spend hours trying to debug. Fortunately I found the culprit and removed the package. Then I had to reimpliment another calendar component called react-calendar. This one is working correctly eventhough I had to rewrite some code.
+
 
 
 

@@ -1,5 +1,5 @@
 const express = require("express");
-const client = require("../db_config");
+const pool = require("../db_config");
 
 
 let router = express.Router();
@@ -20,7 +20,7 @@ router.post("/onboard/", async (req, res) => {
     } = req.body;
 
     try {
-        const updatePatient = await client.query(
+        const updatePatient = await pool.query(
             `UPDATE patients SET 
             city=$2,
             country=$3,
@@ -46,7 +46,7 @@ router.post("/onboard/", async (req, res) => {
                 phone,
                 true]);
 
-        let patient = await client.query(
+        let patient = await pool.query(
             `SELECT * FROM patients WHERE email = $1`, [email]
         )
         return res.status(200).json(patient.rows[0])

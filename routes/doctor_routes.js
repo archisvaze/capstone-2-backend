@@ -1,5 +1,5 @@
 const express = require("express");
-const client = require("../db_config");
+const pool = require("../db_config");
 
 
 let router = express.Router();
@@ -7,7 +7,7 @@ let router = express.Router();
 // //get doctor by id
 // router.get("/:id", async (req, res) => {
 //     try {
-//         const doctor = await client.query("SELECT * FROM doctors WHERE _id = $1", [req.params.id]);
+//         const doctor = await pool.query("SELECT * FROM doctors WHERE _id = $1", [req.params.id]);
 //         if (doctor.rows.length <= 0) {
 //             //doctor with id does not exist
 //             return res.status(400).json({ error: "Doctor Not Found" })
@@ -23,7 +23,7 @@ let router = express.Router();
 //get all doctors
 router.get("/", async (req, res) => {
     try {
-        const allDoctors = await client.query(`SELECT * FROM doctors`);
+        const allDoctors = await pool.query(`SELECT * FROM doctors`);
         for (let doctor of allDoctors.rows) {
             doctor.password = null;
         }
@@ -37,7 +37,7 @@ router.get("/", async (req, res) => {
 //get doctors by speciality
 router.get("/:speciality", async (req, res) => {
     try {
-        const allDoctors = await client.query(
+        const allDoctors = await pool.query(
             `SELECT * FROM doctors WHERE speciality = $1`, [req.params.speciality]
         )
         return res.status(200).json(allDoctors.rows)
@@ -49,7 +49,7 @@ router.get("/:speciality", async (req, res) => {
 //get doctors by city
 router.get("/city/:city", async (req, res) => {
     try {
-        const allDoctors = await client.query(
+        const allDoctors = await pool.query(
             `SELECT * FROM doctors WHERE city = $1`, [req.params.city]
         )
         return res.status(200).json(allDoctors.rows)
@@ -61,7 +61,7 @@ router.get("/city/:city", async (req, res) => {
 //get doctors by username
 router.get("/username/:username", async (req, res) => {
     try {
-        const allDoctors = await client.query(
+        const allDoctors = await pool.query(
             `SELECT * FROM doctors WHERE username = $1`, [req.params.username]
         )
         return res.status(200).json(allDoctors.rows)
@@ -89,7 +89,7 @@ router.post("/onboard/", async (req, res) => {
     } = req.body;
 
     try {
-        const updateDoctor = await client.query(
+        const updateDoctor = await pool.query(
             `UPDATE doctors SET 
         qualification=$2,
         experience=$3,
@@ -118,7 +118,7 @@ router.post("/onboard/", async (req, res) => {
                 img
             ]);
 
-        let doctor = await client.query(
+        let doctor = await pool.query(
             `SELECT * FROM doctors WHERE email = $1`, [email]
         )
         return res.status(200).json(doctor.rows[0])
@@ -135,7 +135,7 @@ router.post("/onboard/", async (req, res) => {
 
 router.get("/timings/:id/:date", async (req, res) => {
     try {
-        let existingDoctor = await client.query(
+        let existingDoctor = await pool.query(
             `SELECT * FROM doctors WHERE doctor_id = $1`, [req.params.id]
         )
         if (existingDoctor.rows.length <= 0) {
@@ -145,7 +145,7 @@ router.get("/timings/:id/:date", async (req, res) => {
         let doctor = JSON.parse(JSON.stringify(existingDoctor.rows[0]));
         let times = doctor.times;
 
-        let existingConsultations = await client.query(
+        let existingConsultations = await pool.query(
             `SELECT * FROM consultations WHERE doctor_id = $1 AND date = $2`, [doctor.doctor_id, req.params.date]
         )
 

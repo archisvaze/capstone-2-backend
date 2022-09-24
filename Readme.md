@@ -86,6 +86,16 @@ Estimated Time : 10 hours
 - 8:00am - worked on landing page and login page for doctor
 
 - 2:33pm - working on patient accepted consultatios page
+- 5:30pm - done with rating and reviews.
+- 5:37pm - done with main functionality of the website 
+
+- Milestone 5 complete in ~ 6 hours
+
+
+### Milestone 6 - Signup Pages and Landing Page
+
+### Milestone 7 - Forget Password
+
 
 
 

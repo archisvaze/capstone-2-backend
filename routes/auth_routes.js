@@ -1,5 +1,5 @@
 const express = require("express");
-const pool = require("../db_config");
+const client = require("../db_config")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken")
 
@@ -13,7 +13,7 @@ router.post("/doctor/signup", async (req, res) => {
     console.log("signing up new doctor...");
 
     try {
-        const existingPatients = await pool.query(
+        const existingPatients = await client.query(
             "SELECT * FROM doctors WHERE email = $1", [email]);
 
         if (existingPatients.rows.length <= 0) {
@@ -22,7 +22,7 @@ router.post("/doctor/signup", async (req, res) => {
             //generate hashed password
             let salt = await bcrypt.genSalt(10);
             let hash = await bcrypt.hash(password, salt)
-            const newDoctor = await pool.query(
+            const newDoctor = await client.query(
                 `INSERT INTO "doctors" ("username", "email", "password", "onboarded") VALUES ($1, $2, $3, $4)`, [username, email, hash, false]
             );
             return res.status(200).json({ message: "Doctor signed up!" });
@@ -40,7 +40,7 @@ router.post("/doctor/signup", async (req, res) => {
 router.post("/doctor/login", async (req, res) => {
     let { email, password } = req.body;
     try {
-        let existingDoctors = await pool.query(`SELECT * FROM doctors WHERE email = $1`, [email]);
+        let existingDoctors = await client.query(`SELECT * FROM doctors WHERE email = $1`, [email]);
         if (existingDoctors.rows.length <= 0) {
             //doctor with id does not exist
             return res.status(400).json({ error: "Email Not Found" })
@@ -75,7 +75,7 @@ router.post("/patient/signup", async (req, res) => {
     console.log("signing up new patient...");
 
     try {
-        const existingPatients = await pool.query(
+        const existingPatients = await client.query(
             "SELECT * FROM patients WHERE email = $1", [email]);
 
         if (existingPatients.rows.length <= 0) {
@@ -84,7 +84,7 @@ router.post("/patient/signup", async (req, res) => {
             //generate hashed password
             let salt = await bcrypt.genSalt(10);
             let hash = await bcrypt.hash(password, salt)
-            const newPatient = await pool.query(
+            const newPatient = await client.query(
                 `INSERT INTO "patients" ("username", "email", "password", "onboarded") VALUES ($1, $2, $3, $4)`, [username, email, hash, false]
             );
             return res.status(200).json({ message: "Patient signed up!" });
@@ -103,7 +103,7 @@ router.post("/patient/signup", async (req, res) => {
 router.post("/patient/login", async (req, res) => {
     let { email, password } = req.body;
     try {
-        let existingPatients = await pool.query(`SELECT * FROM patients WHERE email = $1`, [email]);
+        let existingPatients = await client.query(`SELECT * FROM patients WHERE email = $1`, [email]);
         if (existingPatients.rows.length <= 0) {
             //patient with id does not exist
             return res.status(400).json({ error: "Email Not Found" })

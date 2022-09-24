@@ -35,7 +35,7 @@ CREATE TABLE patients(
     conditions VARCHAR,
     onboarded BOOLEAN,
     img VARCHAR,
-    phone INT
+    phone VARCHAR
 );
 
 

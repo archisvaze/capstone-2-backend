@@ -27,10 +27,9 @@ router.post("/", async (req, res) => {
 
         if (existingConsultations.rows.length <= 0) {
             console.log("No concurrent consultations found for patient on the same day/time");
-
-            if (!(doctor.rows[0].days.includes(day))) {
-                return res.status(400).json({ error: `Doctor does not do consultations on ${day}. Please choose another day.` })
-            }
+            // if (!(doctor.rows[0].days.includes(day))) {
+            //     return res.status(400).json({ error: `Doctor does not do consultations on ${day}. Please choose another day.` })
+            // }
 
             const newConsultation = await pool.query(
                 `INSERT INTO "consultations" ("doctor_id", "patient_id", "date", "time", "status", "cost") VALUES ($1, $2, $3, $4, $5, $6)`, [doctor_id, patient_id, date, time, false, cost]

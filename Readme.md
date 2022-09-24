@@ -85,7 +85,7 @@ Estimated Time : 10 hours
 - 7:30am - working on UI for login/signup
 - 8:00am - worked on landing page and login page for doctor
 
-- 1:02 - 
+- 2:33pm - working on patient accepted consultatios page
 
 
 

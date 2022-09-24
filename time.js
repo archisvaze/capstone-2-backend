@@ -13,7 +13,7 @@ while (i < 48) {
     i += 1;
 }
 
-// console.log(time)
+console.log(time)
 
 // let date  = "2022-10-01"
 

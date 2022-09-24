@@ -152,3 +152,6 @@ router.get("/timings/:id/:date", async (req, res) => {
 })
 
 module.exports = router;
+
+
+

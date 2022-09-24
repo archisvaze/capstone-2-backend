@@ -76,6 +76,10 @@ Estimated Time : 6 hours
 -4:30pm working on landing page
 -5:30pm worked on lading page looks good
 
+(24/9 Saturday)
+- 7:30am - working on UI for login/signup
+- 8:00am - worked on landing page and login page for doctor
+
 
 
 

@@ -71,6 +71,11 @@ Estimated Time : 6 hours
 - 11:50am - worked on UI for previous consultations, now working on cancelling a consultation
 - 2:13pm - added calendar to doctors page. consultations show when clicked on a date.
 
+- Milestone 4 complete in ~ 4 hours
+
+### Milestone 5 - Work on Landing page, login page and Home Pages
+Estimated Time : 10 hours
+
 - 4:30pm - ENCOUNTERED A MASSIVE BUG when I installed a random 3rd party component called "react-modern-calendar-datepicker" and it comepletely broke my app without actually showing any proper errors. So, I had to spend hours trying to debug. Fortunately I found the culprit and removed the package. Then I had to reimpliment another calendar component called react-calendar. This one is working correctly eventhough I had to rewrite some code.
 
 -4:30pm working on landing page
@@ -79,6 +84,8 @@ Estimated Time : 6 hours
 (24/9 Saturday)
 - 7:30am - working on UI for login/signup
 - 8:00am - worked on landing page and login page for doctor
+
+- 1:02 - 
 
 
 

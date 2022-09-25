@@ -102,6 +102,8 @@ Estimated Time : 2 hours
 
 ### Milestone 7 - Forget Password and mobile design
 Estimated Time: 4 hours
+- 11:50am - started working on password reset
+- 12:54pm - password reset functionality for doctor is done
 
 ### Milestone 8 - Code Cleanup and fix bugs(if any)
 

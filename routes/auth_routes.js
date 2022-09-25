@@ -2,6 +2,8 @@ const express = require("express");
 const pool = require("../db_config")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken")
+const nodemailer = require("nodemailer");
+
 
 
 let router = express.Router();
@@ -129,4 +131,189 @@ router.post("/patient/login", async (req, res) => {
     }
 })
 
+//password reset for doctor
+
+router.get("/doctor/forgot-password/", async (req, res) => {
+    res.render("doctor-forgot-password")
+})
+router.post("/doctor/forgot-password", async (req, res) => {
+    let { email } = req.body;
+    const existingUser = await pool.query(
+        `SELECT * FROM doctors WHERE email = $1`, [email]
+    );
+    if (existingUser.rows.length <= 0) {
+        return res.status(400).send("Email does not exist")
+    }
+    let doctor = JSON.parse(JSON.stringify(existingUser.rows[0]));
+
+    //create one time link
+    const secret = process.env.ACCESS_TOKEN_SECRET + doctor.password;
+    const payload = {
+        id: doctor.doctor_id,
+        email: doctor.email
+    }
+    const token = jwt.sign(payload, secret, { expiresIn: "15m" });
+    const link = `http://localhost:8000/auth/doctor/reset-password/${doctor.doctor_id}/${token}`
+
+    sendMail(doctor.email, link);
+    res.status(200).send("Reset Link has been sent to your email")
+
+})
+
+router.get("/doctor/reset-password/:id/:token", async (req, res) => {
+    const { id, token } = req.params;
+    const existingDoctors = await pool.query(
+        `SELECT * FROM doctors WHERE doctor_id = $1`, [id]
+    )
+    if (existingDoctors.rows.length <= 0) {
+        return res.status(400).send("User not found")
+    }
+    let doctor = JSON.parse(JSON.stringify(existingDoctors.rows[0]));
+
+    const secret = process.env.ACCESS_TOKEN_SECRET + doctor.password;
+    try {
+        const payload = jwt.verify(token, secret)
+        res.render('doctor-reset-password', { email: doctor.email })
+
+    } catch (error) {
+        return res.status(400).send(error.message)
+    }
+
+})
+router.post("/doctor/reset-password/:id/:token", async (req, res) => {
+    const { id, token } = req.params;
+    const { password } = req.body;
+    const existingDoctors = await pool.query(
+        `SELECT * FROM doctors WHERE doctor_id = $1`, [id]
+    )
+    if (existingDoctors.rows.length <= 0) {
+        return res.status(400).send("User not found")
+    }
+    let doctor = JSON.parse(JSON.stringify(existingDoctors.rows[0]));
+    const secret = process.env.ACCESS_TOKEN_SECRET + doctor.password;
+
+    try {
+        const payload = jwt.verify(token, secret);
+        let salt = await bcrypt.genSalt(10);
+        let hash = await bcrypt.hash(password, salt);
+
+        const updatedDoctor = await pool.query(`
+        UPDATE doctors SET password = $1 WHERE email = $2`, [hash, doctor.email]
+        )
+        return res.status(200).send("Password Updated! Please Login again")
+
+
+    } catch (error) {
+
+        return res.status(400).send(error.message)
+    }
+
+})
+
+
+
+//password reset for patient
+
+router.get("/patient/forgot-password/", async (req, res) => {
+    res.render("patient-forgot-password")
+})
+router.post("/patient/forgot-password", async (req, res) => {
+    let { email } = req.body;
+    const existingUser = await pool.query(
+        `SELECT * FROM patients WHERE email = $1`, [email]
+    );
+    if (existingUser.rows.length <= 0) {
+        return res.status(400).send("Email does not exist")
+    }
+    let patient = JSON.parse(JSON.stringify(existingUser.rows[0]));
+
+    //create one time link
+    const secret = process.env.ACCESS_TOKEN_SECRET + patient.password;
+    const payload = {
+        id: patient.patient_id,
+        email: patient.email
+    }
+    const token = jwt.sign(payload, secret, { expiresIn: "15m" });
+    const link = `http://localhost:8000/auth/patient/reset-password/${patient.patient_id}/${token}`
+
+    sendMail(patient.email, link);
+    res.status(200).send("Reset Link has been sent to your email")
+
+})
+
+router.get("/patient/reset-password/:id/:token", async (req, res) => {
+    const { id, token } = req.params;
+    const existingpatient = await pool.query(
+        `SELECT * FROM patients WHERE patient_id = $1`, [id]
+    )
+    if (existingpatient.rows.length <= 0) {
+        return res.status(400).send("User not found")
+    }
+    let patient = JSON.parse(JSON.stringify(existingpatient.rows[0]));
+
+    const secret = process.env.ACCESS_TOKEN_SECRET + patient.password;
+    try {
+        const payload = jwt.verify(token, secret)
+        res.render('doctor-reset-password', { email: patient.email })
+
+    } catch (error) {
+        return res.status(400).send(error.message)
+    }
+
+})
+router.post("/patient/reset-password/:id/:token", async (req, res) => {
+    const { id, token } = req.params;
+    const { password } = req.body;
+    const existingpatient = await pool.query(
+        `SELECT * FROM patients WHERE patient_id = $1`, [id]
+    )
+    if (existingpatient.rows.length <= 0) {
+        return res.status(400).send("User not found")
+    }
+    let patient = JSON.parse(JSON.stringify(existingpatient.rows[0]));
+    const secret = process.env.ACCESS_TOKEN_SECRET + patient.password;
+
+    try {
+        const payload = jwt.verify(token, secret);
+        let salt = await bcrypt.genSalt(10);
+        let hash = await bcrypt.hash(password, salt);
+
+        const updatedpatient = await pool.query(`
+        UPDATE patients SET password = $1 WHERE email = $2`, [hash, patient.email]
+        )
+        return res.status(200).send("Password Updated! Please Login again")
+
+
+    } catch (error) {
+
+        return res.status(400).send(error.message)
+    }
+
+})
+
 module.exports = router;
+
+
+var sendMail = async (to, link) => {
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD
+        }
+
+    });
+    const mailOptions = {
+        from: process.env.EMAIL,
+        to: to,
+        subject: "Password Reset Link for DocSeek",
+        text: link
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}

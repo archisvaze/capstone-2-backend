@@ -103,6 +103,8 @@ Estimated Time : 2 hours
 ### Milestone 7 - Forget Password and mobile design
 Estimated Time: 4 hours
 
+### Milestone 8 - Code Cleanup and fix bugs(if any)
+
 
 
 

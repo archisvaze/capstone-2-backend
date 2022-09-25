@@ -93,10 +93,16 @@ Estimated Time : 10 hours
 
 
 ### Milestone 6 - Signup Pages and Landing Page
+Estimated Time : 2 hours
 (25/9 Sunday)
 - 7:37am - working on redesigning landing page and login page
+- 9:08am - worked on landing page and signup pgaes for doctor and patient
+
+- Milestone 6 complete in ~ 1 hour 30 mins
 
 ### Milestone 7 - Forget Password
+
+
 
 
 

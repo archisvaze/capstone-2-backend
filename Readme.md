@@ -100,7 +100,10 @@ Estimated Time : 2 hours
 
 - Milestone 6 complete in ~ 1 hour 30 mins
 
-### Milestone 7 - Forget Password
+### Milestone 7 - Forget Password and mobile design
+Estimated Time: 4 hours
+
+
 
 
 

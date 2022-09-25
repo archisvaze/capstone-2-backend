@@ -93,6 +93,8 @@ Estimated Time : 10 hours
 
 
 ### Milestone 6 - Signup Pages and Landing Page
+(25/9 Sunday)
+- 7:37am - working on redesigning landing page and login page
 
 ### Milestone 7 - Forget Password
 

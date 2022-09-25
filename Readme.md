@@ -104,6 +104,9 @@ Estimated Time : 2 hours
 Estimated Time: 4 hours
 - 11:50am - started working on password reset
 - 12:54pm - password reset functionality for doctor is done
+- 2:49pm - done
+
+- Milestone 7 complete in ~ 2 hours
 
 ### Milestone 8 - Code Cleanup and fix bugs(if any)
 

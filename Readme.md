@@ -110,6 +110,9 @@ Estimated Time: 4 hours
 
 ### Milestone 8 - Code Cleanup and fix bugs(if any)
 
+- 9:15am - working on consultation card UI
+
+
 
 
 

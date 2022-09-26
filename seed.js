@@ -3,6 +3,7 @@ let seed = [
         username: 'Lacey Smith',
         email: 'fermentum.arcu.vestibulum@yahoo.org',
         city: 'Đồng Hới',
+        rating: 4,
         country: 'Austria',
         speciality: 'Psychiatrist',
         experience: 'massa. Vestibulum accumsan neque et nunc.',
@@ -28,6 +29,7 @@ let seed = [
         city: 'Cork',
         country: 'United States',
         speciality: 'Otolaryngologist',
+        rating: 5,
         experience: 'Morbi accumsan laoreet ipsum. Curabitur consequat, lectus sit amet',
         qualification: 'BS',
         onboarded: true,
@@ -43,6 +45,7 @@ let seed = [
         email: 'pharetra.felis@outlook.org',
         city: 'Bogotá',
         country: 'Ireland',
+        rating: 3,
         speciality: 'Ophthalmologist',
         experience: 'aliquet nec, imperdiet nec, leo. Morbi neque tellus, imperdiet non,',
         qualification: 'PHD',
@@ -61,6 +64,7 @@ let seed = [
         country: 'United Kingdom',
         speciality: 'Anesthesiologist',
         experience: 'nascetur',
+        rating: 5,
         qualification: 'MDS',
         onboarded: true,
         password: '5D59ABCA-A2AB-76D6-40D4-0ADC9B958810',
@@ -78,6 +82,7 @@ let seed = [
         speciality: 'Obstetrician/Gynecologist',
         experience: 'ut mi. Duis',
         qualification: 'MS',
+        rating: 3,
         onboarded: true,
         password: '52C2EEA9-E0EF-0D94-6A31-4444D0BBD7C0',
         hospital: 'Aliquet Odio Etiam PC',
@@ -93,6 +98,7 @@ let seed = [
         country: 'China',
         speciality: 'Oncologist',
         experience: 'Proin',
+        rating: 5,
         qualification: 'BDS',
         onboarded: true,
         password: '5DBD4A50-A151-6949-CBF8-EAC75D5AC119',
@@ -110,6 +116,7 @@ let seed = [
         speciality: 'Otolaryngologist',
         experience: 'sem ut dolor dapibus gravida. Aliquam tincidunt,',
         qualification: 'BDS',
+        rating: 4,
         onboarded: true,
         password: 'E5F97220-D131-F748-37C7-782DDDD81356',
         hospital: 'Tempus Non Lacinia Corp.',
@@ -122,6 +129,7 @@ let seed = [
         username: 'Audrey Wyatt',
         email: 'non.massa.non@protonmail.org',
         city: 'Heredia',
+        rating: 5,
         country: 'Netherlands',
         speciality: 'Neurologist',
         experience: 'nunc sit amet metus.',
@@ -142,6 +150,7 @@ let seed = [
         speciality: 'Cardiologist',
         experience: 'elit elit fermentum risus, at',
         qualification: 'MD',
+        rating: 3,
         onboarded: true,
         password: 'A1EEFE2D-8974-F2B1-6BF8-A5271F6ACAD0',
         hospital: 'Ac Turpis Egestas Industries',
@@ -157,6 +166,7 @@ let seed = [
         country: 'South Africa',
         speciality: 'Otolaryngologist',
         experience: 'egestas blandit. Nam nulla magna, malesuada vel,',
+        rating: 2,
         qualification: 'MD',
         onboarded: true,
         password: 'E38DEE1A-7973-79A3-5B8A-D4BF563BB5EC',
@@ -174,6 +184,7 @@ let seed = [
         speciality: 'Neurologist',
         experience: 'Fusce mollis. Duis sit amet diam',
         qualification: 'MS',
+        rating: 5,
         onboarded: true,
         password: 'C5312A2C-47BC-56EA-89E7-623594B9F229',
         hospital: 'Donec Egestas Inc.',
@@ -188,6 +199,7 @@ let seed = [
         city: 'Villa del Rosario',
         country: 'South Korea',
         speciality: 'Nephrologist',
+        rating: 5,
         experience: 'id ante dictum cursus. Nunc mauris',
         qualification: 'MD',
         onboarded: true,
@@ -210,6 +222,7 @@ let seed = [
         city: 'Serang',
         country: 'Belgium',
         speciality: 'Neurologist',
+        rating: 5,
         experience: 'egestas blandit. Nam',
         qualification: 'MBBS',
         onboarded: true,
@@ -228,6 +241,7 @@ let seed = [
         speciality: 'Anesthesiologist',
         experience: 'ridiculus mus. Proin vel arcu eu',
         qualification: 'PHD',
+        rating: 4,
         onboarded: true,
         password: 'A11BD216-B6A8-E2D4-1598-B49AA5D80159',
         hospital: 'Faucibus Orci LLC',
@@ -241,6 +255,7 @@ let seed = [
         email: 'dictum@yahoo.edu',
         city: 'San Ramón',
         country: 'Peru',
+        rating: 5,
         speciality: 'Psychiatrist',
         experience: 'non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum',
         qualification: 'BS',
@@ -261,6 +276,7 @@ let seed = [
         experience: 'massa. Vestibulum accumsan neque et nunc. Quisque ornare tortor at',
         qualification: 'MS',
         onboarded: true,
+        rating: 2,
         password: 'CBD699D2-32D8-4613-A9BB-5996359DE0FA',
         hospital: 'Egestas Aliquam Corporation',
         days: ['Thursday', 'Friday', 'Saturday', 'Tuesday', 'Sunday'],
@@ -276,6 +292,7 @@ let seed = [
         speciality: 'Dentist',
         experience: 'eu enim. Etiam imperdiet dictum',
         qualification: 'PHD',
+        rating: 5,
         onboarded: true,
         password: 'A5AB6438-6153-71E4-1DBE-FED5513AA535',
         hospital: 'Rutrum Non Associates',
@@ -289,6 +306,7 @@ let seed = [
         email: 'amet.ornare@hotmail.com',
         city: 'Adana',
         country: 'Austria',
+        rating: 5,
         speciality: 'Neurologist',
         experience: 'hendrerit. Donec porttitor tellus non magna. Nam ligula elit, pretium',
         qualification: 'BDS',
@@ -305,6 +323,7 @@ let seed = [
         email: 'magna@icloud.org',
         city: 'Vallentuna',
         country: 'Peru',
+        rating: 3,
         speciality: 'Otolaryngologist',
         experience: 'quam quis diam. Pellentesque',
         qualification: 'MBBS',
@@ -324,6 +343,7 @@ let seed = [
         speciality: 'Dentist',
         experience: 'Morbi',
         qualification: 'MDS',
+        rating: 5,
         onboarded: true,
         password: '21581CF2-F86C-96FF-6BCB-DEC8D2F2C6C1',
         hospital: 'Maecenas Malesuada Inc.',
@@ -335,16 +355,27 @@ let seed = [
 ]
 
 const client = require("./db_config");
-
+client.connect();
 async function addData() {
     for (let user of seed) {
         console.log("adding " +  user.username);
         await client.query(
-            `INSERT INTO "doctors" ("username", "email", "city", "country", "speciality","experience","qualification","onboarded","password","hospital", "days", "cost","times","img") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`, [user.username, user.email, user.city, user.country, user.speciality, user.experience, user.qualification, user.onboarded, user.password, user.hospital, user.days, user.cost, user.times, user.img]
+            `INSERT INTO "doctors" ("username", "email", "city", "country", "speciality","experience","qualification","onboarded","password","hospital", "days", "cost","times","img", "rating") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`, [user.username, user.email, user.city, user.country, user.speciality, user.experience, user.qualification, user.onboarded, user.password, user.hospital, user.days, user.cost, user.times, user.img, user.rating]
         );
     }
     console.log("DONE")
 }
 
-addData();
 
+
+// addData();
+
+// async function clearDB(){
+//     console.log("truncating table")
+//     await client.query(
+//         `TRUNCATE TABLE patients`
+//     )
+//     console.log("DONE")
+// }
+
+// clearDB();

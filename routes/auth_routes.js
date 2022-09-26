@@ -1,5 +1,5 @@
 const express = require("express");
-const pool = require("../db_config")
+const client = require("../db_config")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer");
@@ -15,7 +15,7 @@ router.post("/doctor/signup", async (req, res) => {
     console.log("signing up new doctor...");
 
     try {
-        const existingPatients = await pool.query(
+        const existingPatients = await client.query(
             "SELECT * FROM doctors WHERE email = $1", [email]);
 
         if (existingPatients.rows.length <= 0) {
@@ -24,7 +24,7 @@ router.post("/doctor/signup", async (req, res) => {
             //generate hashed password
             let salt = await bcrypt.genSalt(10);
             let hash = await bcrypt.hash(password, salt)
-            const newDoctor = await pool.query(
+            const newDoctor = await client.query(
                 `INSERT INTO "doctors" ("username", "email", "password", "onboarded") VALUES ($1, $2, $3, $4)`, [username, email, hash, false]
             );
             return res.status(200).json({ message: "Doctor signed up!" });
@@ -42,7 +42,7 @@ router.post("/doctor/signup", async (req, res) => {
 router.post("/doctor/login", async (req, res) => {
     let { email, password } = req.body;
     try {
-        let existingDoctors = await pool.query(`SELECT * FROM doctors WHERE email = $1`, [email]);
+        let existingDoctors = await client.query(`SELECT * FROM doctors WHERE email = $1`, [email]);
         if (existingDoctors.rows.length <= 0) {
             //doctor with id does not exist
             return res.status(400).json({ error: "Email Not Found" })
@@ -77,7 +77,7 @@ router.post("/patient/signup", async (req, res) => {
     console.log("signing up new patient...");
 
     try {
-        const existingPatients = await pool.query(
+        const existingPatients = await client.query(
             "SELECT * FROM patients WHERE email = $1", [email]);
 
         if (existingPatients.rows.length <= 0) {
@@ -86,7 +86,7 @@ router.post("/patient/signup", async (req, res) => {
             //generate hashed password
             let salt = await bcrypt.genSalt(10);
             let hash = await bcrypt.hash(password, salt)
-            const newPatient = await pool.query(
+            const newPatient = await client.query(
                 `INSERT INTO "patients" ("username", "email", "password", "onboarded") VALUES ($1, $2, $3, $4)`, [username, email, hash, false]
             );
             return res.status(200).json({ message: "Patient signed up!" });
@@ -105,7 +105,7 @@ router.post("/patient/signup", async (req, res) => {
 router.post("/patient/login", async (req, res) => {
     let { email, password } = req.body;
     try {
-        let existingPatients = await pool.query(`SELECT * FROM patients WHERE email = $1`, [email]);
+        let existingPatients = await client.query(`SELECT * FROM patients WHERE email = $1`, [email]);
         if (existingPatients.rows.length <= 0) {
             //patient with id does not exist
             return res.status(400).json({ error: "Email Not Found" })
@@ -138,7 +138,7 @@ router.get("/doctor/forgot-password/", async (req, res) => {
 })
 router.post("/doctor/forgot-password", async (req, res) => {
     let { email } = req.body;
-    const existingUser = await pool.query(
+    const existingUser = await client.query(
         `SELECT * FROM doctors WHERE email = $1`, [email]
     );
     if (existingUser.rows.length <= 0) {
@@ -162,7 +162,7 @@ router.post("/doctor/forgot-password", async (req, res) => {
 
 router.get("/doctor/reset-password/:id/:token", async (req, res) => {
     const { id, token } = req.params;
-    const existingDoctors = await pool.query(
+    const existingDoctors = await client.query(
         `SELECT * FROM doctors WHERE doctor_id = $1`, [id]
     )
     if (existingDoctors.rows.length <= 0) {
@@ -183,7 +183,7 @@ router.get("/doctor/reset-password/:id/:token", async (req, res) => {
 router.post("/doctor/reset-password/:id/:token", async (req, res) => {
     const { id, token } = req.params;
     const { password } = req.body;
-    const existingDoctors = await pool.query(
+    const existingDoctors = await client.query(
         `SELECT * FROM doctors WHERE doctor_id = $1`, [id]
     )
     if (existingDoctors.rows.length <= 0) {
@@ -197,7 +197,7 @@ router.post("/doctor/reset-password/:id/:token", async (req, res) => {
         let salt = await bcrypt.genSalt(10);
         let hash = await bcrypt.hash(password, salt);
 
-        const updatedDoctor = await pool.query(`
+        const updatedDoctor = await client.query(`
         UPDATE doctors SET password = $1 WHERE email = $2`, [hash, doctor.email]
         )
         return res.status(200).send("Password Updated! Please Login again")
@@ -219,7 +219,7 @@ router.get("/patient/forgot-password/", async (req, res) => {
 })
 router.post("/patient/forgot-password", async (req, res) => {
     let { email } = req.body;
-    const existingUser = await pool.query(
+    const existingUser = await client.query(
         `SELECT * FROM patients WHERE email = $1`, [email]
     );
     if (existingUser.rows.length <= 0) {
@@ -243,7 +243,7 @@ router.post("/patient/forgot-password", async (req, res) => {
 
 router.get("/patient/reset-password/:id/:token", async (req, res) => {
     const { id, token } = req.params;
-    const existingpatient = await pool.query(
+    const existingpatient = await client.query(
         `SELECT * FROM patients WHERE patient_id = $1`, [id]
     )
     if (existingpatient.rows.length <= 0) {
@@ -264,7 +264,7 @@ router.get("/patient/reset-password/:id/:token", async (req, res) => {
 router.post("/patient/reset-password/:id/:token", async (req, res) => {
     const { id, token } = req.params;
     const { password } = req.body;
-    const existingpatient = await pool.query(
+    const existingpatient = await client.query(
         `SELECT * FROM patients WHERE patient_id = $1`, [id]
     )
     if (existingpatient.rows.length <= 0) {
@@ -278,7 +278,7 @@ router.post("/patient/reset-password/:id/:token", async (req, res) => {
         let salt = await bcrypt.genSalt(10);
         let hash = await bcrypt.hash(password, salt);
 
-        const updatedpatient = await pool.query(`
+        const updatedpatient = await client.query(`
         UPDATE patients SET password = $1 WHERE email = $2`, [hash, patient.email]
         )
         return res.status(200).send("Password Updated! Please Login again")

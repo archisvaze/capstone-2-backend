@@ -334,12 +334,12 @@ let seed = [
     }
 ]
 
-const pool = require("./db_config");
+const client = require("./db_config");
 
 async function addData() {
     for (let user of seed) {
         console.log("adding " +  user.username);
-        await pool.query(
+        await client.query(
             `INSERT INTO "doctors" ("username", "email", "city", "country", "speciality","experience","qualification","onboarded","password","hospital", "days", "cost","times","img") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`, [user.username, user.email, user.city, user.country, user.speciality, user.experience, user.qualification, user.onboarded, user.password, user.hospital, user.days, user.cost, user.times, user.img]
         );
     }

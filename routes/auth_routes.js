@@ -153,7 +153,7 @@ router.post("/doctor/forgot-password", async (req, res) => {
         email: doctor.email
     }
     const token = jwt.sign(payload, secret, { expiresIn: "15m" });
-    const link = `http://localhost:8000/auth/doctor/reset-password/${doctor.doctor_id}/${token}`
+    const link = `https://doc-seek.herokuapp.com/auth/doctor/reset-password/${doctor.doctor_id}/${token}`
 
     sendMail(doctor.email, link);
     res.status(200).send("Reset Link has been sent to your email")
@@ -234,7 +234,7 @@ router.post("/patient/forgot-password", async (req, res) => {
         email: patient.email
     }
     const token = jwt.sign(payload, secret, { expiresIn: "15m" });
-    const link = `http://localhost:8000/auth/patient/reset-password/${patient.patient_id}/${token}`
+    const link = `https://doc-seek.herokuapp.com/auth/patient/reset-password/${patient.patient_id}/${token}`
 
     sendMail(patient.email, link);
     res.status(200).send("Reset Link has been sent to your email")

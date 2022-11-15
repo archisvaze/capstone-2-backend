@@ -37,6 +37,14 @@ app.use("/doctor", doctorRouter);
 const patientRouter = require("./routes/patient_routes");
 app.use("/patient", patientRouter);
 
+app.get("/", async (req, res) => {
+    try {
+        return res.status(200).json({ message: "Conneted" })
+    } catch (error) {
+        return res.status(400).json(error)
+    }
+})
+
 
 
 

@@ -38,10 +38,24 @@ app.post("/suspend-doctor/:id", async (req, res) => {
     try {
         const updateDoctor = await client.query(
             `UPDATE doctors SET 
-            suspended=$2,
+            suspended=$2
             WHERE doctor_id=$1`, [req.params.id, true]
         )
-        return res.status(200).json({ message: "Doctor with id suspended" })
+        return res.status(200).json({ message: "Doctor suspended" })
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+})
+//unsuspend doctor by id
+app.post("/unsuspend-doctor/:id", async (req, res) => {
+    try {
+        const updateDoctor = await client.query(
+            `UPDATE doctors SET 
+            suspended=$2
+            WHERE doctor_id=$1`, [req.params.id, false]
+        )
+        return res.status(200).json({ message: "Doctor unsuspended" })
 
     } catch (error) {
         return res.status(400).json({ error: error.message })

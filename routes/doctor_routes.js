@@ -72,6 +72,7 @@ router.get("/username/:username", async (req, res) => {
 })
 
 
+
 //onboard a doctor by email
 router.post("/onboard/", async (req, res) => {
     let {

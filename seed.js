@@ -358,13 +358,22 @@ const client = require("./db_config");
 client.connect();
 async function addData() {
     for (let user of seed) {
-        console.log("adding " +  user.username);
+        console.log("adding " + user.username);
         await client.query(
             `INSERT INTO "doctors" ("username", "email", "city", "country", "speciality","experience","qualification","onboarded","password","hospital", "days", "cost","times","img", "rating") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`, [user.username, user.email, user.city, user.country, user.speciality, user.experience, user.qualification, user.onboarded, user.password, user.hospital, user.days, user.cost, user.times, user.img, user.rating]
         );
     }
     console.log("DONE")
 }
+
+async function addFlag() {
+    await client.query(
+        `ALTER TABLE doctors ADD COLUMN suspended BOOLEAN DEFAULT FALSE`
+    );
+    console.log('done')
+}
+
+// addFlag();
 
 
 

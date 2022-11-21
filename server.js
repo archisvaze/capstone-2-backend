@@ -26,6 +26,21 @@ const httpServer = app.listen(process.env.PORT || 8000, () => {
 const authRouter = require("./routes/auth_routes");
 app.use("/auth", authRouter);
 
+//suspend doctor by id
+app.post("/suspend-doctor/:id", async (req, res) => {
+    try {
+        const updateDoctor = await client.query(
+            `UPDATE doctors SET 
+            suspended=$2,
+            WHERE doctor_id=$1`, [req.params.id, true]
+        )
+        return res.status(200).json({ message: "Doctor with id suspended" })
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+})
+
 app.use(authenticateMiddleware);
 
 const consultationRouter = require("./routes/consultation_routes");

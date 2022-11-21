@@ -26,6 +26,13 @@ const httpServer = app.listen(process.env.PORT || 8000, () => {
 const authRouter = require("./routes/auth_routes");
 app.use("/auth", authRouter);
 
+app.get("/", async (req, res) => {
+    try {
+        return res.status(200).json({ message: "Conneted" })
+    } catch (error) {
+        return res.status(400).json(error)
+    }
+})
 //suspend doctor by id
 app.post("/suspend-doctor/:id", async (req, res) => {
     try {
@@ -41,6 +48,21 @@ app.post("/suspend-doctor/:id", async (req, res) => {
     }
 })
 
+app.get("/all-doctors", async (req, res) => {
+    try {
+        const allDoctors = await client.query(`SELECT * FROM doctors`);
+        for (let doctor of allDoctors.rows) {
+            doctor.password = null;
+        }
+        return res.status(200).json(allDoctors.rows)
+
+    } catch (error) {
+        return res.status(400).json({ error: error.message })
+    }
+})
+
+
+
 app.use(authenticateMiddleware);
 
 const consultationRouter = require("./routes/consultation_routes");
@@ -51,15 +73,6 @@ app.use("/doctor", doctorRouter);
 
 const patientRouter = require("./routes/patient_routes");
 app.use("/patient", patientRouter);
-
-app.get("/", async (req, res) => {
-    try {
-        return res.status(200).json({ message: "Conneted" })
-    } catch (error) {
-        return res.status(400).json(error)
-    }
-})
-
 
 
 
